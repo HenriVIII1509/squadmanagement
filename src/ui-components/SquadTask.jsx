@@ -20,9 +20,21 @@ import {
   processFile,
   validateField,
 } from "./utils";
+import { generateClient } from "aws-amplify/api";
+import { createNote } from "../graphql/mutations";
 import { Field } from "@aws-amplify/ui-react/internal";
+const client = generateClient();
 export default function SquadTask(props) {
-  const { onSubmit, onValidate, onChange, overrides, ...rest } = props;
+  const {
+    clearOnSuccess = true,
+    onSuccess,
+    onError,
+    onSubmit,
+    onValidate,
+    onChange,
+    overrides,
+    ...rest
+  } = props;
   const initialValues = {
     Field0: "",
     Field1: "",
@@ -68,7 +80,7 @@ export default function SquadTask(props) {
       padding="20px"
       onSubmit={async (event) => {
         event.preventDefault();
-        const modelFields = {
+        let modelFields = {
           Field0,
           Field1,
           Field2,
@@ -92,7 +104,35 @@ export default function SquadTask(props) {
         if (validationResponses.some((r) => r.hasError)) {
           return;
         }
-        await onSubmit(modelFields);
+        if (onSubmit) {
+          modelFields = onSubmit(modelFields);
+        }
+        try {
+          Object.entries(modelFields).forEach(([key, value]) => {
+            if (typeof value === "string" && value === "") {
+              modelFields[key] = null;
+            }
+          });
+          await client.graphql({
+            query: createNote.replaceAll("__typename", ""),
+            variables: {
+              input: {
+                ...modelFields,
+              },
+            },
+          });
+          if (onSuccess) {
+            onSuccess(modelFields);
+          }
+          if (clearOnSuccess) {
+            resetStateValues();
+          }
+        } catch (err) {
+          if (onError) {
+            const messages = err.errors.map((e) => e.message).join("\n");
+            onError(modelFields, messages);
+          }
+        }
       }}
       {...getOverrideProps(overrides, "SquadTask")}
       {...rest}
@@ -100,6 +140,7 @@ export default function SquadTask(props) {
       <TextField
         label="Name"
         isRequired={false}
+        isReadOnly={false}
         value={Field0}
         onChange={(e) => {
           let { value } = e.target;
@@ -124,6 +165,8 @@ export default function SquadTask(props) {
       ></TextField>
       <TextAreaField
         label="Session Review"
+        isRequired={false}
+        isReadOnly={false}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -149,6 +192,8 @@ export default function SquadTask(props) {
         errorMessage={errors.Field2?.errorMessage}
         hasError={errors.Field2?.hasError}
         label={"Image"}
+        isRequired={false}
+        isReadOnly={false}
       >
         <StorageManager
           onUploadSuccess={({ key }) => {

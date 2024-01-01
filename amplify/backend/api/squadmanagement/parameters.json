@@ -1,5 +1,6 @@
 {
   "AppSyncApiName": "squadmanagement",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthModeLastUpdated": "2024-01-01T22:01:28.672Z"
 }

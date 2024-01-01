@@ -24,14 +24,8 @@ function App() {
           }}
         >
           <h1>Hello {user?.username}!</h1>
-          <h2>{`Current Note: ${currentNote?.id}`}</h2>
-          <SquadTask
-            onSubmit={fields => { /* Handle form submission */}}
-          />
+          <SquadTask/>
           <button onClick={signOut}>Sign out</button>
-          {currentImageUrl && (
-            <img src={currentImageUrl} alt="Storage file"></img>
-          )}
         </main>
       )}
     </Authenticator>

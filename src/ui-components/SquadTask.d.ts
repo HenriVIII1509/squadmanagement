@@ -42,7 +42,10 @@ export declare type SquadTaskOverridesProps = {
 export declare type SquadTaskProps = React.PropsWithChildren<{
     overrides?: SquadTaskOverridesProps | undefined | null;
 } & {
-    onSubmit: (fields: SquadTaskInputValues) => void;
+    clearOnSuccess?: boolean;
+    onSubmit?: (fields: SquadTaskInputValues) => SquadTaskInputValues;
+    onSuccess?: (fields: SquadTaskInputValues) => void;
+    onError?: (fields: SquadTaskInputValues, errorMessage: string) => void;
     onChange?: (fields: SquadTaskInputValues) => SquadTaskInputValues;
     onValidate?: SquadTaskValidationValues;
 } & React.CSSProperties>;

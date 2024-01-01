@@ -25,23 +25,21 @@ export default function NoteUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    name: "",
-    description: "",
-    image: "",
+    Field0: "",
+    Field1: "",
+    Field2: "",
   };
-  const [name, setName] = React.useState(initialValues.name);
-  const [description, setDescription] = React.useState(
-    initialValues.description
-  );
-  const [image, setImage] = React.useState(initialValues.image);
+  const [Field0, setField0] = React.useState(initialValues.Field0);
+  const [Field1, setField1] = React.useState(initialValues.Field1);
+  const [Field2, setField2] = React.useState(initialValues.Field2);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = noteRecord
       ? { ...initialValues, ...noteRecord }
       : initialValues;
-    setName(cleanValues.name);
-    setDescription(cleanValues.description);
-    setImage(cleanValues.image);
+    setField0(cleanValues.Field0);
+    setField1(cleanValues.Field1);
+    setField2(cleanValues.Field2);
     setErrors({});
   };
   const [noteRecord, setNoteRecord] = React.useState(noteModelProp);
@@ -61,9 +59,9 @@ export default function NoteUpdateForm(props) {
   }, [idProp, noteModelProp]);
   React.useEffect(resetStateValues, [noteRecord]);
   const validations = {
-    name: [{ type: "Required" }],
-    description: [],
-    image: [],
+    Field0: [],
+    Field1: [],
+    Field2: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -91,9 +89,9 @@ export default function NoteUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          name,
-          description: description ?? null,
-          image: image ?? null,
+          Field0: Field0 ?? null,
+          Field1: Field1 ?? null,
+          Field2: Field2 ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -146,82 +144,82 @@ export default function NoteUpdateForm(props) {
       {...rest}
     >
       <TextField
-        label="Name"
-        isRequired={true}
-        isReadOnly={false}
-        value={name}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              name: value,
-              description,
-              image,
-            };
-            const result = onChange(modelFields);
-            value = result?.name ?? value;
-          }
-          if (errors.name?.hasError) {
-            runValidationTasks("name", value);
-          }
-          setName(value);
-        }}
-        onBlur={() => runValidationTasks("name", name)}
-        errorMessage={errors.name?.errorMessage}
-        hasError={errors.name?.hasError}
-        {...getOverrideProps(overrides, "name")}
-      ></TextField>
-      <TextField
-        label="Description"
+        label="Field0"
         isRequired={false}
         isReadOnly={false}
-        value={description}
+        value={Field0}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              name,
-              description: value,
-              image,
+              Field0: value,
+              Field1,
+              Field2,
             };
             const result = onChange(modelFields);
-            value = result?.description ?? value;
+            value = result?.Field0 ?? value;
           }
-          if (errors.description?.hasError) {
-            runValidationTasks("description", value);
+          if (errors.Field0?.hasError) {
+            runValidationTasks("Field0", value);
           }
-          setDescription(value);
+          setField0(value);
         }}
-        onBlur={() => runValidationTasks("description", description)}
-        errorMessage={errors.description?.errorMessage}
-        hasError={errors.description?.hasError}
-        {...getOverrideProps(overrides, "description")}
+        onBlur={() => runValidationTasks("Field0", Field0)}
+        errorMessage={errors.Field0?.errorMessage}
+        hasError={errors.Field0?.hasError}
+        {...getOverrideProps(overrides, "Field0")}
       ></TextField>
       <TextField
-        label="Image"
+        label="Field1"
         isRequired={false}
         isReadOnly={false}
-        value={image}
+        value={Field1}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              name,
-              description,
-              image: value,
+              Field0,
+              Field1: value,
+              Field2,
             };
             const result = onChange(modelFields);
-            value = result?.image ?? value;
+            value = result?.Field1 ?? value;
           }
-          if (errors.image?.hasError) {
-            runValidationTasks("image", value);
+          if (errors.Field1?.hasError) {
+            runValidationTasks("Field1", value);
           }
-          setImage(value);
+          setField1(value);
         }}
-        onBlur={() => runValidationTasks("image", image)}
-        errorMessage={errors.image?.errorMessage}
-        hasError={errors.image?.hasError}
-        {...getOverrideProps(overrides, "image")}
+        onBlur={() => runValidationTasks("Field1", Field1)}
+        errorMessage={errors.Field1?.errorMessage}
+        hasError={errors.Field1?.hasError}
+        {...getOverrideProps(overrides, "Field1")}
+      ></TextField>
+      <TextField
+        label="Field2"
+        isRequired={false}
+        isReadOnly={false}
+        value={Field2}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              Field0,
+              Field1,
+              Field2: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.Field2 ?? value;
+          }
+          if (errors.Field2?.hasError) {
+            runValidationTasks("Field2", value);
+          }
+          setField2(value);
+        }}
+        onBlur={() => runValidationTasks("Field2", Field2)}
+        errorMessage={errors.Field2?.errorMessage}
+        hasError={errors.Field2?.hasError}
+        {...getOverrideProps(overrides, "Field2")}
       ></TextField>
       <Flex
         justifyContent="space-between"

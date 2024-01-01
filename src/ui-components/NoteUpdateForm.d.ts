@@ -22,21 +22,21 @@ export declare type ValidationResponse = {
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type NoteUpdateFormInputValues = {
-    name?: string;
-    description?: string;
-    image?: string;
+    Field0?: string;
+    Field1?: string;
+    Field2?: string;
 };
 export declare type NoteUpdateFormValidationValues = {
-    name?: ValidationFunction<string>;
-    description?: ValidationFunction<string>;
-    image?: ValidationFunction<string>;
+    Field0?: ValidationFunction<string>;
+    Field1?: ValidationFunction<string>;
+    Field2?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type NoteUpdateFormOverridesProps = {
     NoteUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    name?: PrimitiveOverrideProps<TextFieldProps>;
-    description?: PrimitiveOverrideProps<TextFieldProps>;
-    image?: PrimitiveOverrideProps<TextFieldProps>;
+    Field0?: PrimitiveOverrideProps<TextFieldProps>;
+    Field1?: PrimitiveOverrideProps<TextFieldProps>;
+    Field2?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type NoteUpdateFormProps = React.PropsWithChildren<{
     overrides?: NoteUpdateFormOverridesProps | undefined | null;
