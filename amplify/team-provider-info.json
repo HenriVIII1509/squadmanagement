@@ -14,6 +14,9 @@
     "categories": {
       "auth": {
         "squadmanagement93cc08bc": {}
+      },
+      "api": {
+        "squadmanagement": {}
       }
     }
   }
